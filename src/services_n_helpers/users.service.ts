@@ -37,5 +37,4 @@ export const getSearchUsers = async (q:string):Promise<IUser[]>=>{
         .then(item=>{
             return item.users
         }).catch(()=>redirect('/refresh'))
-
 }

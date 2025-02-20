@@ -8,7 +8,7 @@ export const Menu =async () => {
     const value = await getCookie('user', {cookies})
     return (
         <div>
-            <ul>
+            <ul className={'text-blue-400'}>
                 {!value && <li><Link href={'/login'}>login</Link></li>}
 
                 {

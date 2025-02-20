@@ -5,6 +5,6 @@ export const ButtonComponent = () => {
     const router = useRouter()
     return (
         <>
-            <button onClick={()=>router.back()}>back</button></>
+            <button className={'text-blue-400'} onClick={()=>router.back()}>back</button></>
     );
 };

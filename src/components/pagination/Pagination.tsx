@@ -1,6 +1,5 @@
 'use client'
 import {redirect, usePathname, useSearchParams} from "next/navigation";
-import {headers} from "next/headers";
 
 export const Pagination =  () => {
     const searchParams = useSearchParams()
@@ -8,14 +7,18 @@ export const Pagination =  () => {
     const endPoint = usePathname().split('/').pop()
     const pg = searchParams.get('pg') || '0'
     return (
-        <div>
-            <button onClick={()=>{
+        <div className={'flex gap-4 '}>
+            <button
+                className={'border-2 border-solid border-blue-400  w-20'}
+                onClick={()=>{
                 if(pg && +pg>=1){
                     let couter = +pg;
                     redirect(path+'?pg='+(--couter))
                 }
             }} disabled={(+pg==0)}>prev</button>
-            <button onClick={()=>{
+            <button
+                className={'border-2 border-solid border-blue-400 w-20'}
+                onClick={()=>{
                 if(pg && +pg<(endPoint=='users'?6 : 2)){
                     let couter = +pg;
                     redirect(path+'?pg='+(++couter))

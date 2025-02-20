@@ -7,7 +7,9 @@ export const SearchComponent = () => {
     return (
         <div>
             <Form action={'/login/'+path+'/search'}>
-                <input type="text" name={'q'}/>
+                <input
+                    className={'text-black'}
+                    type="text" name={'q'}/>
                 <button>search</button>
             </Form>
         </div>

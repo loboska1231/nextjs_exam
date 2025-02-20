@@ -26,6 +26,7 @@
     "axios": "^1.7.9",
     "joi": "^17.13.3",
     "@hookform/resolvers": "^4.0.0",
-    "cookies-next": "^5.1.0"
+    "cookies-next": "^5.1.0",
+    "react-hook-form": "^7.54.2"
   }
 }

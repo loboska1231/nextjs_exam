@@ -1,9 +1,8 @@
 import {SearchParams} from "next/dist/server/request/search-params";
 import {FC} from "react";
-import {ButtonComponent} from "@/components/ButtonComponent";
-import {redirect} from "next/navigation";
+import {ButtonComponent} from "@/components/back/ButtonComponent";
 import {
-    getRecipeOfUser,
+    getRecipe,
     getSearchRecipesByMeal,
     getSearchRecipesByName,
     getSearchRecipesByTag
@@ -18,14 +17,20 @@ const Search :FC<props>= async ({searchParams}) => {
     const {q} = await searchParams;
     if(!q) return
     let data;
-    if(+q) data = await getRecipeOfUser(+q)
+    if(+q) {
+        data = await getRecipe(+q)
+        console.log('1')
+    }
     else {
         data = await getSearchRecipesByName(q)
+        console.log('2')
         if(data == false){
             data = await getSearchRecipesByTag(q)
+            console.log('3')
         }
         if(data== false){
             data= await getSearchRecipesByMeal(q)
+            console.log('4')
         }
     }
     // выглядит страшненько

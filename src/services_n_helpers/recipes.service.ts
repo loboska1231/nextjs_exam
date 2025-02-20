@@ -1,4 +1,3 @@
-import {IUser} from "@/models/users-models/IUser";
 import {IRecipe} from "@/models/recipes-models/IRecipe";
 import {RetriveCookie} from "@/services_n_helpers/helpers";
 import {IUserWithTokens} from "@/models/users-models/IUserWithTokens";
@@ -17,15 +16,15 @@ export const getRecipes = async (token:string,pg:number):Promise<IRecipe[]>=>{
             return recipes
         })
 }
-export const getRecipeOfUser = async (id:number):Promise<IRecipe>=>{
+export const getRecipe = async (id:number):Promise<IRecipe>=>{
     const {accessToken} = await RetriveCookie<IUserWithTokens>('user');
-    const {recipes}:IRecipeResponse =await fetch(`https://dummyjson.com/auth/recipes?limit=50`,{
+    return await fetch(`https://dummyjson.com/auth/recipes/`+id,{
         headers:{
             Authorization: 'Bearer ' + accessToken
         },
         credentials:'include'
-    }).then(obj=>obj.json()).catch(()=>redirect('/refresh'))
-    return recipes.find(recipe=>recipe.userId == id)
+    }).then(obj=>obj.json())
+        .catch(()=>redirect('/refresh'))
 }
 export const getSearchRecipesByName = async (q:string)=>{
     const {accessToken} = await RetriveCookie<IUserWithTokens>('user');
@@ -66,4 +65,15 @@ export const getSearchRecipesByTag= async (q:string)=>{
             return recipes
         })
         .catch(()=>redirect('/refresh'))
+}
+export const getUserRecipe = async (id:number):Promise<IRecipe>=>{
+    const {accessToken} = await RetriveCookie<IUserWithTokens>('user');
+    const {recipes}:IRecipeResponse = await fetch(`https://dummyjson.com/auth/recipes?limit=0`,{
+        headers:{
+            Authorization: 'Bearer ' + accessToken
+        },
+        credentials:'include'
+    }).then(obj=>obj.json())
+        .catch(()=>redirect('/refresh'))
+    return recipes.find(recipe=>recipe.userId==id)
 }

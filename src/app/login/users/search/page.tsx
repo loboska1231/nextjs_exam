@@ -1,9 +1,8 @@
 import {SearchParams} from "next/dist/server/request/search-params";
 import {FC} from "react";
-import {ButtonComponent} from "@/components/ButtonComponent";
+import {ButtonComponent} from "@/components/back/ButtonComponent";
 import {getSearchUsers, getUser} from "@/services_n_helpers/users.service";
 import {UserComponent} from "@/components/users/user-component/UserComponent";
-import {redirect} from "next/navigation";
 
 type props = {
     searchParams:Promise<SearchParams>
