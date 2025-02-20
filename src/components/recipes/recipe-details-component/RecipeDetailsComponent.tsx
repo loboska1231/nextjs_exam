@@ -19,7 +19,7 @@ const RecipeDetailsComponent =async ({searchParams}:Props) => {
             <h3>tags</h3>
             <span>
                 <ul>
-                    {recipe.tags.map(tag=><li>- {tag}</li> )}
+                    {recipe.tags.map(tag=><li> - <Link href={{pathname:'/login/recipes/search',query:{tag:tag}} }> {tag} </Link></li>)}
                 </ul>
             </span>
             <h3>meal-type</h3>

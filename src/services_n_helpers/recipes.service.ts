@@ -53,9 +53,9 @@ export const getSearchRecipesByMeal= async (q:string)=>{
         })
         .catch(()=>redirect('/refresh'))
 }
-export const getSearchRecipesByTag= async (q:string)=>{
+export const getSearchRecipesByTag= async (tag:string)=>{
     const {accessToken} = await RetriveCookie<IUserWithTokens>('user');
-    return await fetch('https://dummyjson.com/recipes/tag/'+q,{
+    return await fetch('https://dummyjson.com/recipes/tag/'+tag,{
         headers:{
             Authorization: 'Bearer '+ accessToken
         }

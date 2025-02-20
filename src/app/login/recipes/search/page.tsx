@@ -8,6 +8,7 @@ import {
     getSearchRecipesByTag
 } from "@/services_n_helpers/recipes.service";
 import {RecipeComponent} from "@/components/recipes/recipe-component/RecipeComponent";
+import {redirect} from "next/navigation";
 
 type props = {
     searchParams:Promise<SearchParams>
@@ -15,11 +16,19 @@ type props = {
 
 const Search :FC<props>= async ({searchParams}) => {
     const {q} = await searchParams;
-    if(!q) return
+    const {tag} = await searchParams;
+    if(!q && !tag) {
+        redirect('/login/recipes')
+    }
     let data;
-    if(+q) {
+    if(+q && !tag) {
         data = await getRecipe(+q)
+        console.log(tag)
+        console.log(q)
         console.log('1')
+    }
+    else if(tag){
+        data = await getSearchRecipesByTag(tag)
     }
     else {
         data = await getSearchRecipesByName(q)
