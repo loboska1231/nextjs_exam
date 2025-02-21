@@ -16,9 +16,9 @@ const UserDetailsComponent =  async ({searchParams}:Props)=> {
             <h2>{user.username}</h2>
             <img src={user.image} alt={user.username}/>
             <p>{user.firstName},{user.lastName},{user.maidenName},age - {user.age}</p>
-            <p>{user.bank.cardType} - {user.bank.currency}</p>
-            <p>{user.company.title} - {user.company.department}</p>
-            <p>{user.university} </p>
+            <p> bank : {user.bank.cardType} - {user.bank.currency}, {user.bank.cardNumber}</p>
+            <p> company : {user.company.title} - {user.company.department}</p>
+            <p>university : {user.university} </p>
             <p>{user.email}</p>
             {
                 recipe ? <Link href={{pathname:'/login/recipes/'+recipe.id,query:{data:stringify}} }>{recipe.name}</Link>

@@ -7,7 +7,7 @@ export const UserComponent:FC<props> = ({user}) => {
     return (
         <div>
             <Link href={{pathname:'/login/users/' + user.id ,query:{data:stringify} }} >
-                {user.id}, {user.username}
+                {user.id}, {user.username}, {user.email}
             </Link>
         </div>
     );

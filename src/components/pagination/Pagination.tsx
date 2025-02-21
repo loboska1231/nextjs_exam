@@ -5,6 +5,7 @@ export const Pagination =  () => {
     const searchParams = useSearchParams()
     const path = usePathname()
     const endPoint = usePathname().split('/').pop()
+
     const pg = searchParams.get('pg') || '0'
     return (
         <div className={'flex gap-4 '}>
@@ -13,7 +14,8 @@ export const Pagination =  () => {
                 onClick={()=>{
                 if(pg && +pg>=1){
                     let couter = +pg;
-                    redirect(path+'?pg='+(--couter))
+                    redirect(path + '?pg=' + (--couter))
+
                 }
             }} disabled={(+pg==0)}>prev</button>
             <button

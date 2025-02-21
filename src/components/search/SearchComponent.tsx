@@ -10,7 +10,10 @@ export const SearchComponent = () => {
                 <input
                     className={'text-black'}
                     type="text" name={'q'}/>
-                <button>search</button>
+
+                <button
+                    className={'ml-1 border-2 border-solid border-red-400  w-20'}
+                >search</button>
             </Form>
         </div>
     );

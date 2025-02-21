@@ -18,8 +18,7 @@ export const login = async ({username,expiresInMins,password}:formProps)=>{
     const t = +expiresInMins;
     return (await axiosInstance.post<IUserWithTokens>('/login',{username,password,t}).catch(()=>redirect('/login'))).data
 }
-export const refresh = async (cookie:string)=>{
-    const user = JSON.parse(cookie) as IUserWithTokens
+export const refresh = async (user:IUserWithTokens)=>{
     const {data:{accessToken,refreshToken}} = await axiosInstance.post<ITokens>('/refresh',{
         refreshToken: user.refreshToken
     })

@@ -1,18 +1,26 @@
 'use server'
 import {getUsers} from "@/services_n_helpers/users.service";
-import {redirect} from "next/navigation";
 import {NextRequest, NextResponse} from "next/server";
+import {IUserWithTokens} from "@/models/users-models/IUserWithTokens";
+import {refresh} from "@/services_n_helpers/api.service";
 
+export const GET= async (request:NextRequest)=>{
+    console.log(request.cookies.has('user'))
+    if(request.cookies.has('user') && request.cookies.get('user')?.value){
+        const token = request.headers.get('Authorization')
+        const page = request.headers.get('page')
 
-export const GET= async (req:NextRequest)=>{
-    const token = req.headers.get('Authorization') || '';
-    const page = req.headers?.get('page') || 0
-    const t = token.split(' ').pop()
-    if(t){
-        let res = new NextResponse();
-        const users = await getUsers(t,+page).catch(()=>redirect('/refresh'));
-        res = NextResponse.json({users})
-        return res;
+        let users = await getUsers(token,+page);
+        if(!users){
+            console.log('refresh')
+            const cookieUser = JSON.parse(request.cookies.get('user')?.value) as IUserWithTokens
+            const newUser = await refresh(cookieUser)
+            users = await getUsers(newUser.accessToken,+page)
+            const response = NextResponse.json({users})
+            response.cookies.set('user',JSON.stringify(newUser))
+            return response
+        }
+        return Response.json({users})
     }
-    return Response.json({message:'TOKEN REQUIRED',status:401})
+    return Response.json({message:'no cookie auth',status:401})
 }

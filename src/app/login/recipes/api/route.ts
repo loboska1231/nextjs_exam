@@ -1,16 +1,25 @@
 'use server'
 import {getRecipes} from "@/services_n_helpers/recipes.service";
 import {NextRequest, NextResponse} from "next/server";
-import {redirect} from "next/navigation";
+import {IUserWithTokens} from "@/models/users-models/IUserWithTokens";
+import {refresh} from "@/services_n_helpers/api.service";
 
-export const GET=async (req:NextRequest,res:NextResponse)=>{
-    const token = req.headers.get('Authorization') || '';
-    const page = req.headers?.get('page') || 0;
-    const t = token.split(' ').pop();
-    if(t){
-        const recipes = await getRecipes(t,+page).catch(()=>redirect('/refresh'));
-        res = NextResponse.json({recipes});
-        return res
+export const GET= async (request:NextRequest)=>{
+    console.log(request.cookies.has('user'))
+    if(request.cookies.has('user') && request.cookies.get('user')?.value){
+        const token = request.headers.get('Authorization')
+        const page = request.headers.get('page')
+        let recipes = await getRecipes(token,+page);
+        if(!recipes){
+            console.log('refresh')
+            const cookieUser = JSON.parse(request.cookies.get('user')?.value) as IUserWithTokens
+            const newUser = await refresh(cookieUser)
+            recipes = await getRecipes(newUser.accessToken,+page)
+            const response = NextResponse.json({recipes})
+            response.cookies.set('user',JSON.stringify(newUser))
+            return response
+        }
+        return Response.json({recipes})
     }
-    return Response.json({message:'TOKEN REQUIRED',status:401})
+    return Response.json({message:'no cookie auth',status:401})
 }
