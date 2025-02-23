@@ -2,18 +2,23 @@
 import Form from "next/form";
 import {saveUser} from "@/server-actions/serverActions";
 import {redirect} from "next/navigation";
-import {useGetCookie} from "cookies-next";
+import {useHasCookie} from "cookies-next";
 import {useForm} from "react-hook-form";
 import {joiResolver} from "@hookform/resolvers/joi";
 import {validForm} from "@/components/validation/valid";
+import {useContext} from "react";
+import {MyContext} from "@/context/MyContext";
+
 interface IUserForm {
     username: string,
     password:string,
     expiresInMins:number
 }
 const Login =   () => {
-    const getCookie = useGetCookie()
-    const user=  getCookie('user')
+    const hasCookie = useHasCookie()
+    const user = hasCookie('user')
+    const {switchBool} = useContext(MyContext)
+    if(user) switchBool(true)
     const {
         register,
         formState:{
@@ -29,20 +34,26 @@ const Login =   () => {
                     action={saveUser}>
                     <label >
                         <input
-                            className={'text-black'}
-                            type="text" {...register('username')}/>
+                            className={'text-black border-solid border-black border'}
+                            type="text" {...register('username')}
+                            placeholder={'username'}
+                        />
                         {errors.username && <div>{errors.username?.message}</div> }
                     </label>
                     <label>
                         <input
-                            className={'text-black'}
-                            type="password" {...register('password')}/>
+                            className={'text-black border-solid border-black border'}
+                            type="password" {...register('password')}
+                            placeholder={'password'}
+                        />
                         {errors.password && <div>{errors.password?.message}</div> }
                     </label>
                     <label >
                         <input
-                            className={'text-black'}
-                            type="number" {...register('expiresInMins')}/>
+                            className={'text-black border-solid border-black border'}
+                            type="number" {...register('expiresInMins')}
+                            placeholder={'expires in minutes'}
+                        />
                         {errors.expiresInMins && <div>{errors.expiresInMins?.message}</div> }
                     </label>
                     <button

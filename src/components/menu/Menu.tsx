@@ -1,18 +1,18 @@
 import Link from "next/link";
-import {getCookie} from "cookies-next";
+import {hasCookie} from "cookies-next";
 import {cookies} from "next/headers";
 import {UserLogo} from "@/components/user-logo/UserLogo";
 
 
-export const Menu =async () => {
-    const value = await getCookie('user', {cookies})
+export const Menu = async () => {
+    const bool = await hasCookie('user',{cookies})
     return (
         <div>
             <ul className={'text-blue-400'}>
-                {!value && <li><Link href={'/login'}>login</Link></li>}
+                {!bool && <li><Link href={'/login'}>login</Link></li>}
 
                 {
-                    value &&
+                    bool &&
                     <>
                         <UserLogo/>
                         <li><Link href={'/login/users'}>users</Link></li>

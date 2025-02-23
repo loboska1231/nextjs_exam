@@ -13,7 +13,7 @@ type props = {
 const Recipes = async ({searchParams}:props) => {
     const sp = await searchParams
     const pg = sp.pg?.toString()
-    if(! await getCookie('user',{cookies})) redirect('/login')
+    if(! await getCookie('user',{cookies})) redirect('/')
     const cookie = await getCookie('user',{cookies});
     const user = JSON.parse(cookie) as IUserWithTokens
     return (
