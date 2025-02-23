@@ -1,7 +1,8 @@
 # task
 ТЗ контрольної роботи
-Взяти ТЗ яке було для контрольної по react і зробити його на nextjs
+Взяти ТЗ яке було для контрольної по react і зробити його на nextjs, якщо що, то редакс вам не знадобиться в контрольній на нексті
 
+<a src='https://github.com/OktenSchool/js_demos/blob/master/react/2025/react.txt'> react task</a>
 https://dummyjson.com/docs
 
 Сайт на якому знаходиться акумульована інформація з dummyjson.com про користувачів та рецепти.
